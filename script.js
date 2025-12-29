@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var indexToRename = null;
     var indexToDelete = null;
     var currentFilter = "all";
+    var deleteType = null;
 
     function saveTodos() {
         localStorage.setItem("todos", JSON.stringify(todos));
@@ -79,6 +80,7 @@ checkbox.onclick = () => {
             deleteIcon.onclick = () => {
                 deletePopup.style.display = "flex";
                 indexToDelete = index;
+                deleteType = "one";
             };
 
             actions.append(checkbox, editIcon, deleteIcon);
@@ -126,25 +128,41 @@ checkbox.onclick = () => {
     cancelRenameBtn.onclick = () => renamePopup.style.display = "none";
 
     confirmDeleteBtn.onclick = () => {
-        todos.splice(indexToDelete, 1);
+        if (deleteType === "one") {
+            todos.splice(indexToDelete, 1);
+        }
+
+        if (deleteType === "done") {
+            todos = todos.filter(t => !t.done);
+        }
+
+        if (deleteType === "all") {
+            todos = [];
+        }
+
         saveTodos();
         showTodos();
         deletePopup.style.display = "none";
+        deleteType = null;
     };
 
-    cancelDeleteBtn.onclick = () => deletePopup.style.display = "none";
+
+    cancelDeleteBtn.onclick = () => {
+        deletePopup.style.display = "none";
+        deleteType = null;
+    };
 
     deleteDoneTasks.onclick = () => {
-        todos = todos.filter(t => !t.done);
-        saveTodos();
-        showTodos();
+        deletePopup.style.display = "flex";
+        deleteType = "done";
     };
 
+
     deleteAllTasks.onclick = () => {
-        todos = [];
-        saveTodos();
-        showTodos();
+        deletePopup.style.display = "flex";
+        deleteType = "all";
     };
+
 
     document.querySelector('[data-filter="all"]').onclick = () => {
         currentFilter = "all";
