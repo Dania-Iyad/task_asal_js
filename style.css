@@ -97,9 +97,10 @@ button.add-btn:hover {
     gap: 5px;
     margin-bottom: 25px;
     flex-wrap: wrap;
+    width: 100%;
 }
 .filter-btn {
-    width: 448px;
+    width: 300px;
     align-items: center;
     padding: 8px 20px;
     background-color: #1278a7;
@@ -256,7 +257,6 @@ input[type="checkbox"]:checked::after {
   gap: 30px;
   margin-top: 20px;
     justify-content: center;
-     margin: 0 100px;
 }
 
 .bottom-delete-btn {
